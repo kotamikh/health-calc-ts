@@ -1,12 +1,17 @@
 <template>
-  <div class="app">Hello TS</div>
+  <div class="app">
+    <the-navbar/>
+    <router-view></router-view>
+  </div>
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
+import {defineComponent} from 'vue';
+import TheNavbar from "@/components/TheNavbar.vue";
 
 export default defineComponent({
-  name: 'App'
+  name: 'App',
+  components: {TheNavbar}
 });
 </script>
 
@@ -15,7 +20,5 @@ export default defineComponent({
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
 }
 </style>

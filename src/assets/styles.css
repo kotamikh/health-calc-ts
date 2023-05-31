@@ -1,8 +1,18 @@
+* {
+    box-sizing: border-box;
+}
+
 body {
     margin: 0;
+    padding: 0;
     width: 100%;
     height: 100vh;
+    color: white;
     background-size: contain;
     backdrop-filter: blur(5px) opacity(60%);
-    background: url("@/assets/background-pic.webp") repeat top;
+    background: url("@/assets/background_1.jpg") repeat;
+}
+
+h1 {
+    margin: 0;
 }

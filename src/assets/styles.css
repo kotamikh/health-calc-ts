@@ -1,18 +1,19 @@
 * {
     box-sizing: border-box;
+    line-height: 1.5em;
 }
 
 body {
     margin: 0;
     padding: 0;
     width: 100%;
-    height: 100vh;
     color: white;
-    background-size: contain;
-    backdrop-filter: blur(5px) opacity(60%);
-    background: url("@/assets/background_1.jpg") repeat;
+    background-size: cover;
+    background: url("@/assets/background_1.jpg");
 }
 
 h1 {
     margin: 0;
+    font-size: 70px;
+    font-weight: normal;
 }

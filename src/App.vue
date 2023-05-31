@@ -1,6 +1,8 @@
 <template>
   <div class="app">
     <the-navbar/>
+    <home-poster/>
+    <the-calculator/>
     <router-view></router-view>
   </div>
 </template>
@@ -8,10 +10,12 @@
 <script lang="ts">
 import {defineComponent} from 'vue';
 import TheNavbar from "@/components/TheNavbar.vue";
+import HomePoster from "@/components/HomePoster.vue";
+import TheCalculator from "@/components/TheCalculator.vue";
 
 export default defineComponent({
   name: 'App',
-  components: {TheNavbar}
+  components: {TheCalculator, TheNavbar, HomePoster}
 });
 </script>
 

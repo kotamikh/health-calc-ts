@@ -1,16 +1,16 @@
-import {createRouter, createWebHistory} from "vue-router";
+import {createRouter, createWebHistory, RouteRecordRaw} from "vue-router";
 import MainLayout from "@/layouts/MainLayout.vue";
 import HomePoster from "@/components/HomePoster.vue";
-import Calculator from "@/components/TheCalculator.vue";
-import About from "@/components/AboutService.vue";
+import AboutService from "@/components/AboutService.vue";
+import TheCalculator from "@/components/TheCalculator.vue";
 
-export default createRouter({
-    history: createWebHistory(),
-    routes: [
+const routes: Array<RouteRecordRaw> = [
         {
             path: '/',
             component: MainLayout,
-            redirect: {name: 'Home'},
+            redirect: {
+                name: 'Home'
+            },
             children: [
                 {
                     name: 'HomePoster',
@@ -18,16 +18,22 @@ export default createRouter({
                     component: HomePoster
                 },
                 {
-                    name: 'Calculator',
+                    name: 'TheCalculator',
                     path: '/calculator',
-                    component: Calculator
+                    component: TheCalculator
                 },
                 {
-                    name: 'About',
+                    name: 'AboutService',
                     path: '/about',
-                    component: About
+                    component: AboutService
                 }
             ]
         }
     ]
+
+const router = createRouter({
+    history: createWebHistory(process.env.BASE_URL),
+    routes
 })
+
+export default router

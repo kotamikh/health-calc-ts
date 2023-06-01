@@ -3,7 +3,6 @@
     <the-navbar/>
     <home-poster/>
     <the-calculator/>
-    <router-view></router-view>
   </div>
 </template>
 

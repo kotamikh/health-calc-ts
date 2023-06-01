@@ -4,7 +4,6 @@
     <ul class="nav-items">
       <li v-for="link in links"
           :key="link.id"
-          @click="router.push(link.route)"
       >{{ link.title }}
       </li>
     </ul>
@@ -23,7 +22,6 @@ export default defineComponent({
 <script setup lang="ts">
 import {ref} from "vue";
 import link from "@/types/Links";
-import router from "@/router/router";
 
 const links = ref<link[]>([
   {title: 'Home', route: '/home', id: 0},

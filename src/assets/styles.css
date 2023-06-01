@@ -9,7 +9,8 @@ body {
     width: 100%;
     color: white;
     background-size: cover;
-    background: url("@/assets/background_1.jpg");
+    background-attachment: fixed;
+    background-image: url("@/assets/background_1.jpg");
 }
 
 h1 {

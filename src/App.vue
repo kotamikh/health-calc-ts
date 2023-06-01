@@ -1,21 +1,16 @@
 <template>
   <div class="app">
-    <the-navbar/>
-    <home-poster/>
-    <the-calculator/>
+    <MainLayout/>
   </div>
 </template>
 
-<script lang="ts">
-import {defineComponent} from 'vue';
-import TheNavbar from "@/components/TheNavbar.vue";
-import HomePoster from "@/components/HomePoster.vue";
-import TheCalculator from "@/components/TheCalculator.vue";
+<script>
+import MainLayout from "@/layouts/MainLayout.vue";
 
-export default defineComponent({
+export default {
   name: 'App',
-  components: {TheCalculator, TheNavbar, HomePoster}
-});
+  components: { MainLayout }
+}
 </script>
 
 <style>

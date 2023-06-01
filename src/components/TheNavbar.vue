@@ -28,24 +28,38 @@ const links = ref<link[]>([
   {title: 'Calculate', route: '/calculate', id: 1},
   {title: 'About', route: '/about', id: 2}
 ])
+
+window.onscroll = function () {
+  const navbar = document.querySelector('.navbar') as HTMLElement
+    if (window.scrollY > 100) {
+      console.log('color')
+      navbar.classList.add('background')
+    } else {
+      navbar.classList.remove('background')
+    }
+}
 </script>
 
 
 <style scoped lang="sass">
 .navbar
   width: 100%
-  height: 80px
+  height: 70px
   display: flex
   align-items: center
-  padding: 20px 10%
+  padding: 12px 8%
   justify-content: space-between
   position: fixed
   top: 0
   left: 0
-  background-color: rgba(51, 55, 63, 0.7)
+  background-color: transparent
+  transition: background-color 0.5s ease
 
+  &.background
+    background-color: rgba(39, 39, 42, 0.6)
   p
-    font-size: 22px
+    margin: 0
+    font-size: 20px
     font-weight: bold
 
   .nav-items

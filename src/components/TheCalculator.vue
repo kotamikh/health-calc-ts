@@ -2,27 +2,18 @@
   <div class="calculator-block">
     <button class="add-btn"></button>
     <div class="nutrients">
-      <div class="minerals">
-        <button class="minerals-btn">Минералы
-        </button>
-        <ul ref="mineralsList">
-          <li v-for="mineral in minerals"
-              :key="mineral.id"
-          >{{ mineral.title }} - {{ mineral.value }}
-          </li>
-        </ul>
-      </div>
-      <div class="vitamins">
-        <button class="vitamins-btn"
-        >Витамины
-        </button>
-        <ul ref="vitaminsList">
-          <li v-for="vitamin in vitamins"
-              :key="vitamin.id"
-          >{{ vitamin.title }} - {{ vitamin.value }}
-          </li>
-        </ul>
-      </div>
+      <v-expansion-panels variant="accordion">
+        <v-expansion-panel title="Minerals">
+          <v-expansion-panel-text>
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium atque deleniti harum id maxime porro quas quo, repellat vero voluptatibus.
+          </v-expansion-panel-text>
+        </v-expansion-panel>
+        <v-expansion-panel title="Vitamins">
+          <v-expansion-panel-text>
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Rem, ut.
+          </v-expansion-panel-text>
+        </v-expansion-panel>
+      </v-expansion-panels>
     </div>
   </div>
 </template>

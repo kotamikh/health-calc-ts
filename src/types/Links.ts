@@ -1,7 +1,5 @@
-interface link {
+export interface Link {
     title: string,
     route: string,
     id: number
 }
-
-export default link

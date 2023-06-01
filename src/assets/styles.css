@@ -10,7 +10,7 @@ body {
     color: white;
     background-size: cover;
     background-attachment: fixed;
-    background-image: url("@/assets/background_1.jpg");
+    background-image: url("@/assets/background.jpg");
 }
 
 h1 {

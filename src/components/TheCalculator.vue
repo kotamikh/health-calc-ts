@@ -1,22 +1,79 @@
 <template>
   <div class="calculator-block">
     <button class="add-btn"></button>
-    <div class="selects"></div>
+    <div class="nutrients">
+      <div class="minerals">
+        <button class="minerals-btn">Минералы
+        </button>
+        <ul ref="mineralsList">
+          <li v-for="mineral in minerals"
+              :key="mineral.id"
+          >{{ mineral.title }} - {{ mineral.value }}
+          </li>
+        </ul>
+      </div>
+      <div class="vitamins">
+        <button class="vitamins-btn"
+        >Витамины
+        </button>
+        <ul ref="vitaminsList">
+          <li v-for="vitamin in vitamins"
+              :key="vitamin.id"
+          >{{ vitamin.title }} - {{ vitamin.value }}
+          </li>
+        </ul>
+      </div>
+    </div>
   </div>
 </template>
 
-<script>
+<script lang="ts">
 export default {
   name: "TheCalculator"
 }
+</script>
+
+<script setup lang="ts">
+import { ref } from "vue";
+import { Mineral, Vitamin } from "@/types/Nutrients";
+
+const mineralsList = ref<HTMLUListElement>()
+const vitaminsList = ref<HTMLUListElement>()
+
+const minerals = ref<Mineral[]>([
+  { title: 'Calcium', value: 0, percent: 0, id: 0 },
+  { title: 'Iron', value: 0, percent: 0, id: 1 },
+  { title: 'Magnesium', value: 0, percent: 0, id: 2 },
+  { title: 'Phosphorus', value: 0, percent: 0, id: 3 },
+  { title: 'Zink', value: 0, percent: 0, id: 4 },
+  { title: 'Сopper', value: 0, percent: 0, id: 5 },
+])
+
+const vitamins = ref<Vitamin[]>([
+  { title: 'A', value: 0, percent: 0, id: 0 },
+  { title: 'B1', value: 0, percent: 0, id: 1 },
+  { title: 'B2', value: 0, percent: 0, id: 2 },
+  { title: 'B5', value: 0, percent: 0, id: 3 },
+  { title: 'B6', value: 0, percent: 0, id: 4 },
+  { title: 'B9', value: 0, percent: 0, id: 5 },
+  { title: 'B12', value: 0, percent: 0, id: 6 },
+  { title: 'Сholine', value: 0, percent: 0, id: 7 },
+  { title: 'C', value: 0, percent: 0, id: 8 },
+  { title: 'D', value: 0, percent: 0, id: 9 },
+  { title: 'E', value: 0, percent: 0, id: 10 },
+  { title: 'K', value: 0, percent: 0, id: 11 }
+])
 </script>
 
 <style scoped lang="sass">
 .calculator-block
   width: 60%
   height: 400px
+  color: black
   margin: 0 auto
   padding: 30px
+  display: flex
+  justify-content: space-between
   background-color: #e3e3e3
   border-radius: 20px
 
@@ -40,4 +97,47 @@ export default {
       color: #FFF
       line-height: 120px
       transition: all .15s ease-in-out
+      text-shadow: 1px 1px 2px black
+
+    &:hover
+      &::after
+        transform: scale(120%)
+
+  .nutrients
+    width: 40%
+    overflow: hidden
+    border-radius: 3px
+    height: fit-content
+    background-color: white
+
+    button
+      border: 0
+      width: 100%
+      display: flex
+      align-items: center
+      padding: 15px
+      text-align: start
+      font-size: 16px
+      background-color: white
+
+      &::after
+        content: ''
+        width: 20px
+        height: 20px
+        margin-left: auto
+        transform: rotate(0deg)
+        transition: transform 0.2s ease-in-out
+        background-image: url('@/assets/arrow.png')
+        background-repeat: no-repeat
+
+      &.focus
+        &::after
+          transform: rotate(180deg)
+
+    ul
+      display: none
+
+      &.open
+        display: block
+
 </style>

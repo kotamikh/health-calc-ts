@@ -1,13 +1,30 @@
-export interface Mineral {
-    title: string,
-    value: number,
-    percent: number,
-    id: number
+export enum NutrientType {
+    Vitamin = 'vitamin',
+    Mineral = 'mineral'
 }
 
-export interface Vitamin {
-    title: string,
-    value: number,
-    percent: number,
-    id: number
+export enum VitaminName {
+    A = 'a',
+    B = 'b'
+}
+
+export enum MineralName {
+    Calcium = 'calcium',
+    Magnesium = 'magnesium',
+}
+
+interface Nutrient {
+    type: string
+    name: string
+    value: number
+}
+
+export interface Vitamin extends Nutrient {
+    name: VitaminName,
+    type: NutrientType.Vitamin
+}
+
+export interface Mineral extends Nutrient {
+    name: MineralName,
+    type: NutrientType.Mineral
 }

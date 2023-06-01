@@ -5,12 +5,30 @@
       <v-expansion-panels variant="accordion">
         <v-expansion-panel title="Minerals">
           <v-expansion-panel-text>
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium atque deleniti harum id maxime porro quas quo, repellat vero voluptatibus.
+            <v-list>
+              <v-list-item v-for="mineral of minerals" :key="mineral.name">
+                <v-list-item-title>
+                  {{ mineral.name }}
+                </v-list-item-title>
+                <v-list-item-subtitle>
+                  {{ mineral.value }} мг
+                </v-list-item-subtitle>
+              </v-list-item>
+            </v-list>
           </v-expansion-panel-text>
         </v-expansion-panel>
         <v-expansion-panel title="Vitamins">
           <v-expansion-panel-text>
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Rem, ut.
+            <v-list>
+              <v-list-item v-for="vitamin of vitamins" :key="vitamin.name">
+                <v-list-item-title>
+                  {{ vitamin.name }}
+                </v-list-item-title>
+                <v-list-item-subtitle>
+                  {{ vitamin.value }} мг
+                </v-list-item-subtitle>
+              </v-list-item>
+            </v-list>
           </v-expansion-panel-text>
         </v-expansion-panel>
       </v-expansion-panels>
@@ -26,33 +44,30 @@ export default {
 
 <script setup lang="ts">
 import { ref } from "vue";
-import { Mineral, Vitamin } from "@/types/Nutrients";
+import { Mineral, MineralName, NutrientType, Vitamin, VitaminName } from "@/types/Nutrients";
 
 const mineralsList = ref<HTMLUListElement>()
 const vitaminsList = ref<HTMLUListElement>()
 
 const minerals = ref<Mineral[]>([
-  { title: 'Calcium', value: 0, percent: 0, id: 0 },
-  { title: 'Iron', value: 0, percent: 0, id: 1 },
-  { title: 'Magnesium', value: 0, percent: 0, id: 2 },
-  { title: 'Phosphorus', value: 0, percent: 0, id: 3 },
-  { title: 'Zink', value: 0, percent: 0, id: 4 },
-  { title: 'Сopper', value: 0, percent: 0, id: 5 },
+  {
+    type: NutrientType.Mineral,
+    name: MineralName.Calcium,
+    value: 0
+  },
+  {
+    type: NutrientType.Mineral,
+    name: MineralName.Magnesium,
+    value: 0
+  }
 ])
 
 const vitamins = ref<Vitamin[]>([
-  { title: 'A', value: 0, percent: 0, id: 0 },
-  { title: 'B1', value: 0, percent: 0, id: 1 },
-  { title: 'B2', value: 0, percent: 0, id: 2 },
-  { title: 'B5', value: 0, percent: 0, id: 3 },
-  { title: 'B6', value: 0, percent: 0, id: 4 },
-  { title: 'B9', value: 0, percent: 0, id: 5 },
-  { title: 'B12', value: 0, percent: 0, id: 6 },
-  { title: 'Сholine', value: 0, percent: 0, id: 7 },
-  { title: 'C', value: 0, percent: 0, id: 8 },
-  { title: 'D', value: 0, percent: 0, id: 9 },
-  { title: 'E', value: 0, percent: 0, id: 10 },
-  { title: 'K', value: 0, percent: 0, id: 11 }
+  {
+    type: NutrientType.Vitamin,
+    name: VitaminName.A,
+    value: 0
+  }
 ])
 </script>
 

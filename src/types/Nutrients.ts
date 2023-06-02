@@ -4,19 +4,29 @@ export enum NutrientType {
 }
 
 export enum VitaminName {
-    A = 'a',
-    B = 'b'
+    A = 'A',
+    B1 = 'B1',
+    Choline = 'Choline',
+    C = 'C',
+    D = 'D',
+    E = 'E',
+    K = 'K'
 }
 
 export enum MineralName {
-    Calcium = 'calcium',
-    Magnesium = 'magnesium',
+    Calcium = 'Calcium',
+    Magnesium = 'Magnesium',
+    Ferrum = 'Ferrum',
+    Phosphorus = 'Phosphorus',
+    Zink = 'Zink',
+
 }
 
 interface Nutrient {
     type: string
     name: string
     value: number
+    percent: number
 }
 
 export interface Vitamin extends Nutrient {

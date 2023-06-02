@@ -17,11 +17,12 @@ export default {
 <style scoped lang="sass">
 .main-poster
   display: flex
-  height: 100vh
-  width: 90%
-  margin: 0 auto
   align-items: center
   justify-content: start
+
+  width: 90%
+  height: 100vh
+  margin: 0 auto
   font-family: 'Roboto Slab', serif
 
   .text

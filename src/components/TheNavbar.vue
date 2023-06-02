@@ -44,13 +44,15 @@ window.onscroll = function () {
 .navbar
   width: 100%
   height: 70px
+  padding: 12px 8%
+
   display: flex
   align-items: center
-  padding: 12px 8%
   justify-content: space-between
-  position: fixed
+
   top: 0
   left: 0
+  position: fixed
   background-color: transparent
   transition: background-color 0.5s ease
 

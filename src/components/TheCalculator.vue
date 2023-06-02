@@ -1,52 +1,54 @@
 <template>
-  <div class="calculator-block">
-    <div class="added-products">
-      <div class="product"
-           v-for="p in addedProducts">{{ p.name }}
-        <img :src="getUrl(p.image)" alt="product-img">
-        <p>{{ p.weight }} г.</p>
+  <div class="wrapper">
+    <div class="calculator-block">
+      <div class="added-products">
+        <div class="product"
+             v-for="p in addedProducts">{{ p.name }}
+          <img :src="getUrl(p.image)" alt="product-img">
+          <p>{{ p.weight }} г.</p>
+        </div>
+        <button class="open-btn"
+                @click="openModal"
+        ></button>
       </div>
-      <button class="open-btn"
-              @click="openModal"
-      ></button>
-    </div>
-    <products-modal v-model:show="showModal"
-                    @close-modal="showModal = false"
-                    @add-products="addProducts"
-    />
-    <div class="nutrients">
-      <v-expansion-panels variant="accordion">
-        <v-expansion-panel title="Minerals">
-          <v-expansion-panel-text>
-            <v-list>
-              <v-list-item v-for="mineral of minerals" :key="mineral.name">
-                <v-list-item-title>
-                  {{ mineral.name }}
-                </v-list-item-title>
-                <v-list-item-subtitle style="display: flex; justify-content: space-between">
-                  <div>{{ mineral.value }} мг</div>
-                  <div>{{ mineral.percent }} %</div>
-                </v-list-item-subtitle>
-              </v-list-item>
-            </v-list>
-          </v-expansion-panel-text>
-        </v-expansion-panel>
-        <v-expansion-panel title="Vitamins">
-          <v-expansion-panel-text>
-            <v-list>
-              <v-list-item v-for="vitamin of vitamins" :key="vitamin.name">
-                <v-list-item-title>
-                  {{ vitamin.name }}
-                </v-list-item-title>
-                <v-list-item-subtitle style="display: flex; justify-content: space-between">
-                  <div>{{ vitamin.value }} мг</div>
-                  <div>{{ vitamin.percent }} %</div>
-                </v-list-item-subtitle>
-              </v-list-item>
-            </v-list>
-          </v-expansion-panel-text>
-        </v-expansion-panel>
-      </v-expansion-panels>
+      <products-modal v-model:show="showModal"
+                      @close-modal="showModal = false"
+                      @add-products="addProducts"
+      />
+      <div class="nutrients">
+        <v-expansion-panels variant="accordion">
+          <v-expansion-panel title="Minerals">
+            <v-expansion-panel-text>
+              <v-list>
+                <v-list-item v-for="mineral of minerals" :key="mineral.name">
+                  <v-list-item-title>
+                    {{ mineral.name }}
+                  </v-list-item-title>
+                  <v-list-item-subtitle style="display: flex; justify-content: space-between">
+                    <div>{{ mineral.value }} мг</div>
+                    <div>{{ mineral.percent }} %</div>
+                  </v-list-item-subtitle>
+                </v-list-item>
+              </v-list>
+            </v-expansion-panel-text>
+          </v-expansion-panel>
+          <v-expansion-panel title="Vitamins">
+            <v-expansion-panel-text>
+              <v-list>
+                <v-list-item v-for="vitamin of vitamins" :key="vitamin.name">
+                  <v-list-item-title>
+                    {{ vitamin.name }}
+                  </v-list-item-title>
+                  <v-list-item-subtitle style="display: flex; justify-content: space-between">
+                    <div>{{ vitamin.value }} мг</div>
+                    <div>{{ vitamin.percent }} %</div>
+                  </v-list-item-subtitle>
+                </v-list-item>
+              </v-list>
+            </v-expansion-panel-text>
+          </v-expansion-panel>
+        </v-expansion-panels>
+      </div>
     </div>
   </div>
 </template>
@@ -88,7 +90,7 @@ const addProducts = function (arr: Array<HTMLDivElement>) {
 //   product = JSON.parse(JSON.stringify(product))
 // }
 
-const calculateNutrients = function(i: HTMLDivElement) {
+const calculateNutrients = function (i: HTMLDivElement) {
   let product = JSON.parse(JSON.stringify(i))
   let min = JSON.parse(JSON.stringify(minerals))
   let vit = JSON.parse(JSON.stringify(vitamins))
@@ -180,6 +182,11 @@ const addedProducts = ref<HTMLDivElement[]>([])
 </script>
 
 <style scoped lang="sass">
+.wrapper
+  height: 100vh
+  display: flex
+  align-items: center
+
 .calculator-block
   width: 70%
   padding: 45px

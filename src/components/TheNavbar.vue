@@ -4,6 +4,7 @@
     <ul class="nav-items">
       <li v-for="link in links"
           :key="link.id"
+          @click="moveToPage()"
       >{{ link.title }}
       </li>
     </ul>
@@ -23,9 +24,9 @@ import { Link } from "@/types/Links";
 const navbar = ref<HTMLDivElement | null>(null);
 
 const links = ref<Link[]>([
-  { title: 'Home', route: '/home', id: 0 },
-  { title: 'Calculate', route: '/calculate', id: 1 },
-  { title: 'About', route: '/about', id: 2 }
+  { title: 'Home', id: 0 },
+  { title: 'Calculate', id: 1 },
+  { title: 'About', id: 2 }
 ])
 
 window.onscroll = function () {
@@ -37,6 +38,10 @@ window.onscroll = function () {
     }
   }
 }
+
+// const moveToPage = function() {
+//   let page =
+// }
 </script>
 
 

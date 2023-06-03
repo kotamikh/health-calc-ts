@@ -18,23 +18,26 @@ export enum MineralName {
     Magnesium = 'Magnesium',
     Ferrum = 'Ferrum',
     Phosphorus = 'Phosphorus',
-    Zink = 'Zink',
-
+    Zink = 'Zink'
 }
 
-interface Nutrient {
+export interface INutrient {
     type: string
     name: string
-    value: number
-    percent: number
+    dailyRate: number
 }
 
-export interface Vitamin extends Nutrient {
+export interface IVitamin extends INutrient {
     name: VitaminName,
     type: NutrientType.Vitamin
 }
 
-export interface Mineral extends Nutrient {
+export interface IMineral extends INutrient {
     name: MineralName,
     type: NutrientType.Mineral
+}
+
+export interface INutrientsData {
+    [NutrientType.Mineral]: Record<MineralName, IMineral>,
+    [NutrientType.Vitamin]: Record<VitaminName, IVitamin>
 }

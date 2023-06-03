@@ -2,11 +2,13 @@
   <div class="wrapper">
     <div class="calculator-block">
       <div class="added-products">
-        <div class="product"
-             v-for="p in addedProducts">{{ p.name }}
-          <img :src="getUrl(p.image)" alt="product-img">
+        <product-card
+            v-for="p in addedProducts"
+            :name="p.name"
+            :image-name="p.image"
+        >
           <p>{{ p.weight }} г.</p>
-        </div>
+        </product-card>
         <button class="open-btn"
                 @click="openModal"
         ></button>
@@ -61,124 +63,54 @@ export default {
 
 <script setup lang="ts">
 import { ref } from "vue";
-import { Mineral, MineralName, NutrientType, Vitamin, VitaminName } from "@/types/Nutrients";
+import { IMineral, MineralName, NutrientType, IVitamin, VitaminName } from "@/types/Nutrients";
 import ProductsModal from "@/components/ProductsModal.vue";
+import { IProduct } from "@/types/Products";
+import ProductCard from "@/components/ProductCard.vue";
 
 const showModal = ref(false)
-
-function getUrl(name: string) {
-  return new URL(`/src/assets/images/${ name }.png`, import.meta.url)
-}
 
 const openModal = function () {
   showModal.value = true
 }
 
-const addProducts = function (arr: Array<HTMLDivElement>) {
-  arr.forEach((i) => {
-    if (addedProducts.value.includes(i)) {
-      // plusWeight(i)
-    } else {
-      addedProducts.value.push(i)
-      calculateNutrients(i)
-    }
+interface Data {
+  [NutrientType.Mineral]: Record<MineralName, NutrientData>,
+  [NutrientType.Vitamin]: Record<VitaminName, NutrientData>,
+}
+
+interface NutrientData {
+  value: number
+}
+
+const getDefaultNutrientData = (): NutrientData => ({
+  value: 0
+})
+
+const data = ref<Data>({
+  [NutrientType.Mineral]: {
+    [MineralName.Zink]: getDefaultNutrientData(),
+    [MineralName.Ferrum]: getDefaultNutrientData(),
+    [MineralName.Calcium]: getDefaultNutrientData(),
+    [MineralName.Magnesium]: getDefaultNutrientData(),
+    [MineralName.Phosphorus]: getDefaultNutrientData(),
+
+  },
+  [NutrientType.Vitamin]: {
+    [VitaminName.A]: getDefaultNutrientData(),
+    [VitaminName.C]: getDefaultNutrientData(),
+    [VitaminName.D]: getDefaultNutrientData(),
+    [VitaminName.E]: getDefaultNutrientData(),
+    [VitaminName.K]: getDefaultNutrientData(),
+    [VitaminName.B1]: getDefaultNutrientData(),
+    [VitaminName.Choline]: getDefaultNutrientData(),
+  }
+})
+const addProducts = function (arr: Array<IProduct>) {
+  arr.forEach(p => {
+
   })
 }
-
-// const plusWeight = function (product: HTMLDivElement) {
-//   console.log(addedProducts.value.includes(product))
-//   product = JSON.parse(JSON.stringify(product))
-// }
-
-const calculateNutrients = function (i: HTMLDivElement) {
-  let product = JSON.parse(JSON.stringify(i))
-  let min = JSON.parse(JSON.stringify(minerals))
-  let vit = JSON.parse(JSON.stringify(vitamins))
-  console.log(min._rawValue, vit._rawValue)
-  for (let i in min._rawValue) {
-    console.log(i.name)
-  }
-}
-
-const minerals = ref<Mineral[]>([
-  {
-    type: NutrientType.Mineral,
-    name: MineralName.Calcium,
-    value: 0,
-    percent: 0
-  },
-  {
-    type: NutrientType.Mineral,
-    name: MineralName.Magnesium,
-    value: 0,
-    percent: 0
-  },
-  {
-    type: NutrientType.Mineral,
-    name: MineralName.Ferrum,
-    value: 0,
-    percent: 0
-  },
-  {
-    type: NutrientType.Mineral,
-    name: MineralName.Phosphorus,
-    value: 0,
-    percent: 0
-  },
-  {
-    type: NutrientType.Mineral,
-    name: MineralName.Zink,
-    value: 0,
-    percent: 0
-  }
-])
-
-const vitamins = ref<Vitamin[]>([
-  {
-    type: NutrientType.Vitamin,
-    name: VitaminName.A,
-    value: 0,
-    percent: 0
-  },
-  {
-    type: NutrientType.Vitamin,
-    name: VitaminName.B1,
-    value: 0,
-    percent: 0
-  },
-  {
-    type: NutrientType.Vitamin,
-    name: VitaminName.Choline,
-    value: 0,
-    percent: 0
-  },
-  {
-    type: NutrientType.Vitamin,
-    name: VitaminName.C,
-    value: 0,
-    percent: 0
-  },
-  {
-    type: NutrientType.Vitamin,
-    name: VitaminName.D,
-    value: 0,
-    percent: 0
-  },
-  {
-    type: NutrientType.Vitamin,
-    name: VitaminName.E,
-    value: 0,
-    percent: 0
-  },
-  {
-    type: NutrientType.Vitamin,
-    name: VitaminName.K,
-    value: 0,
-    percent: 0
-  }
-])
-
-const addedProducts = ref<HTMLDivElement[]>([])
 </script>
 
 <style scoped lang="sass">
@@ -201,7 +133,6 @@ const addedProducts = ref<HTMLDivElement[]>([])
   border-radius: 20px
   background-color: #e3e3e3
 
-
   .added-products
     width: 60%
     height: fit-content
@@ -210,16 +141,6 @@ const addedProducts = ref<HTMLDivElement[]>([])
     display: flex
     flex-wrap: wrap
     align-items: center
-
-    .product
-      width: 120px
-      height: 120px
-      font-weight: bold
-
-      display: flex
-      align-items: center
-      flex-direction: column
-      border: 2px solid black
 
     .open-btn
       width: 100px

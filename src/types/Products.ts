@@ -1,3 +1,5 @@
+import { MineralName, VitaminName } from "@/types/Nutrients";
+
 export enum ProductName {
     Banana = 'Banana',
     Tangerine = 'Tangerine',
@@ -9,20 +11,15 @@ export enum ProductName {
     Cob = 'Cob'
 }
 
-export interface Product {
+export interface IProduct {
     name: string
     image: string
-    weight: number,
-    Calcium: number,
-    Magnesium: number,
-    Ferrum: number,
-    Phosphorus: number,
-    Zink: number,
-    A: number,
-    B1: number,
-    Choline: number,
-    C: number,
-    D: number,
-    E: number,
-    K: number
+    vitamins: {
+        name: VitaminName,
+        value: number
+    }[],
+    minerals: {
+        name: MineralName,
+        value: number
+    }[]
 }

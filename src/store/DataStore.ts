@@ -201,6 +201,286 @@ export const useDataStore = defineStore('dataStore', () => {
                     value: 0.14
                 }
             ]
+        },
+        [ProductName.Pear]: {
+            name: ProductName.Pear,
+            image: "pear",
+            vitamins: [
+                {
+                    name: VitaminName.A,
+                    value: 0.002
+                },
+                {
+                    name: VitaminName.B1,
+                    value: 0.02
+                },
+                {
+                    name: VitaminName.Choline,
+                    value: 5.1
+                },
+                {
+                    name: VitaminName.C,
+                    value: 5
+                },
+                {
+                    name: VitaminName.D,
+                    value: 0
+                },
+                {
+                    name: VitaminName.E,
+                    value: 0.4
+                },
+                {
+                    name: VitaminName.K,
+                    value: 0.004
+                },
+            ],
+            minerals: [
+                {
+                    name: MineralName.Calcium,
+                    value: 19
+                },
+                {
+                    name: MineralName.Magnesium,
+                    value: 12
+                },
+                {
+                    name: MineralName.Ferrum,
+                    value: 2.3
+                },
+                {
+                    name: MineralName.Phosphorus,
+                    value: 16
+                },
+                {
+                    name: MineralName.Zink,
+                    value: 0.19
+                }
+            ]
+        },
+        [ProductName.Strawberry]: {
+            name: ProductName.Strawberry,
+            image: "strawberry",
+            vitamins: [
+                {
+                    name: VitaminName.A,
+                    value: 0.005
+                },
+                {
+                    name: VitaminName.B1,
+                    value: 0.03
+                },
+                {
+                    name: VitaminName.Choline,
+                    value: 5.7
+                },
+                {
+                    name: VitaminName.C,
+                    value: 60
+                },
+                {
+                    name: VitaminName.D,
+                    value: 0
+                },
+                {
+                    name: VitaminName.E,
+                    value: 0.5
+                },
+                {
+                    name: VitaminName.K,
+                    value: 0.0002
+                },
+            ],
+            minerals: [
+                {
+                    name: MineralName.Calcium,
+                    value: 40
+                },
+                {
+                    name: MineralName.Magnesium,
+                    value: 18
+                },
+                {
+                    name: MineralName.Ferrum,
+                    value: 1.2
+                },
+                {
+                    name: MineralName.Phosphorus,
+                    value: 23
+                },
+                {
+                    name: MineralName.Zink,
+                    value: 0.09
+                }
+            ]
+        },
+        [ProductName.Broccoli]: {
+            name: ProductName.Broccoli,
+            image: "broccoli",
+            vitamins: [
+                {
+                    name: VitaminName.A,
+                    value: 0.03
+                },
+                {
+                    name: VitaminName.B1,
+                    value: 0.07
+                },
+                {
+                    name: VitaminName.Choline,
+                    value: 18.7
+                },
+                {
+                    name: VitaminName.C,
+                    value: 89.2
+                },
+                {
+                    name: VitaminName.D,
+                    value: 0
+                },
+                {
+                    name: VitaminName.E,
+                    value: 0.78
+                },
+                {
+                    name: VitaminName.K,
+                    value: 0.101
+                },
+            ],
+            minerals: [
+                {
+                    name: MineralName.Calcium,
+                    value: 47
+                },
+                {
+                    name: MineralName.Magnesium,
+                    value: 21
+                },
+                {
+                    name: MineralName.Ferrum,
+                    value: 0.73
+                },
+                {
+                    name: MineralName.Phosphorus,
+                    value: 66
+                },
+                {
+                    name: MineralName.Zink,
+                    value: 0.41
+                }
+            ]
+        },
+        [ProductName.Carrot]: {
+            name: ProductName.Carrot,
+            image: "carrot",
+            vitamins: [
+                {
+                    name: VitaminName.A,
+                    value: 2
+                },
+                {
+                    name: VitaminName.B1,
+                    value: 0.06
+                },
+                {
+                    name: VitaminName.Choline,
+                    value: 8.8
+                },
+                {
+                    name: VitaminName.C,
+                    value: 5
+                },
+                {
+                    name: VitaminName.D,
+                    value: 0
+                },
+                {
+                    name: VitaminName.E,
+                    value: 0.4
+                },
+                {
+                    name: VitaminName.K,
+                    value: 0.013
+                },
+            ],
+            minerals: [
+                {
+                    name: MineralName.Calcium,
+                    value: 27
+                },
+                {
+                    name: MineralName.Magnesium,
+                    value: 38
+                },
+                {
+                    name: MineralName.Ferrum,
+                    value: 0.7
+                },
+                {
+                    name: MineralName.Phosphorus,
+                    value: 55
+                },
+                {
+                    name: MineralName.Zink,
+                    value: 0.4
+                }
+            ]
+        },
+        [ProductName.Cob]: {
+            name: ProductName.Cob,
+            image: "cob",
+            vitamins: [
+                {
+                    name: VitaminName.A,
+                    value: 0.053
+                },
+                {
+                    name: VitaminName.B1,
+                    value: 0.38
+                },
+                {
+                    name: VitaminName.Choline,
+                    value: 71
+                },
+                {
+                    name: VitaminName.C,
+                    value: 0
+                },
+                {
+                    name: VitaminName.D,
+                    value: 0
+                },
+                {
+                    name: VitaminName.E,
+                    value: 1.3
+                },
+                {
+                    name: VitaminName.K,
+                    value: 0.0003
+                },
+            ],
+            minerals: [
+                {
+                    name: MineralName.Calcium,
+                    value: 34
+                },
+                {
+                    name: MineralName.Magnesium,
+                    value: 41
+                },
+                {
+                    name: MineralName.Ferrum,
+                    value: 3.7
+                },
+                {
+                    name: MineralName.Phosphorus,
+                    value: 301
+                },
+                {
+                    name: MineralName.Zink,
+                    value: 1.73
+                }
+            ]
         }
     } as Record<ProductName, IProduct>
 

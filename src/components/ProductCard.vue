@@ -26,14 +26,14 @@ const imageUrl = computed<URL>(() => {
 
 <style scoped lang="sass">
 .card
-  width: 100px
-  height: 100px
+  width: 120px
+  height: 120px
   border-radius: 5%
   border: 2px solid #818181
   background-color: #e3e3e3
 
   display: flex
-  flex-direction: column
   align-items: center
+  flex-direction: column
   justify-content: center
 </style>

@@ -23,3 +23,8 @@ export interface IProduct {
         value: number
     }[]
 }
+
+export interface IWeight extends IProduct {
+    name: ProductName,
+    weight: number
+}

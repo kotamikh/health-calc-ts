@@ -58,6 +58,7 @@ window.onscroll = function () {
   top: 0
   left: 0
   position: fixed
+  z-index: 3
   background-color: transparent
   transition: background-color 0.5s ease
 

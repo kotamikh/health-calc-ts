@@ -22,13 +22,13 @@
           <v-expansion-panel title="Minerals">
             <v-expansion-panel-text>
               <v-list>
-                <v-list-item v-for="mineral of minerals" :key="mineral.name">
+                <v-list-item v-for="mineral of nutrients.mineral" :key="mineral.name">
                   <v-list-item-title>
                     {{ mineral.name }}
                   </v-list-item-title>
                   <v-list-item-subtitle style="display: flex; justify-content: space-between">
                     <div>{{ mineral.value }} мг</div>
-                    <div>{{ mineral.percent }} %</div>
+                    <div>{{ }} %</div>
                   </v-list-item-subtitle>
                 </v-list-item>
               </v-list>
@@ -37,13 +37,13 @@
           <v-expansion-panel title="Vitamins">
             <v-expansion-panel-text>
               <v-list>
-                <v-list-item v-for="vitamin of vitamins" :key="vitamin.name">
+                <v-list-item v-for="vitamin of nutrients.vitamin" :key="vitamin.name">
                   <v-list-item-title>
                     {{ vitamin.name }}
                   </v-list-item-title>
                   <v-list-item-subtitle style="display: flex; justify-content: space-between">
                     <div>{{ vitamin.value }} мг</div>
-                    <div>{{ vitamin.percent }} %</div>
+                    <div>{{ }} %</div>
                   </v-list-item-subtitle>
                 </v-list-item>
               </v-list>
@@ -63,10 +63,12 @@ export default {
 
 <script setup lang="ts">
 import { ref } from "vue";
-import { IMineral, MineralName, NutrientType, IVitamin, VitaminName } from "@/types/Nutrients";
+import { IMineral, MineralName, NutrientType, IVitamin, VitaminName, INutrientsData } from "@/types/Nutrients";
 import ProductsModal from "@/components/ProductsModal.vue";
-import { IProduct } from "@/types/Products";
+import { ISelectedProduct } from "@/components/ProductsModal.vue";
 import ProductCard from "@/components/ProductCard.vue";
+import { computed, isProxy, toRaw } from "vue";
+import { useDataStore } from "@/store/DataStore";
 
 const showModal = ref(false)
 
@@ -74,43 +76,64 @@ const openModal = function () {
   showModal.value = true
 }
 
-interface Data {
-  [NutrientType.Mineral]: Record<MineralName, NutrientData>,
-  [NutrientType.Vitamin]: Record<VitaminName, NutrientData>,
-}
+const nutrients = computed(() => {
+  if (isProxy(useDataStore().dailyRateData)) {
+    const rawDailyRate = toRaw(useDataStore().dailyRateData)
+    console.log(rawDailyRate)
+    return rawDailyRate
+  }
+})
 
 interface NutrientData {
   value: number
 }
 
-const getDefaultNutrientData = (): NutrientData => ({
+const getDefaultNutrientData = (name: MineralName | VitaminName): NutrientData => ({
   value: 0
 })
 
-const data = ref<Data>({
-  [NutrientType.Mineral]: {
-    [MineralName.Zink]: getDefaultNutrientData(),
-    [MineralName.Ferrum]: getDefaultNutrientData(),
-    [MineralName.Calcium]: getDefaultNutrientData(),
-    [MineralName.Magnesium]: getDefaultNutrientData(),
-    [MineralName.Phosphorus]: getDefaultNutrientData(),
+// const data = ref<INutrientsData>({
+//   [NutrientType.Mineral]: {
+//     [MineralName.Calcium]: getDefaultNutrientData(MineralName.Calcium),
+//     [MineralName.Magnesium]: getDefaultNutrientData(MineralName.Magnesium),
+//     [MineralName.Ferrum]: getDefaultNutrientData(MineralName.Ferrum),
+//     [MineralName.Phosphorus]: getDefaultNutrientData(MineralName.Phosphorus),
+//     [MineralName.Zink]: getDefaultNutrientData(MineralName.Zink)
+//   },
+//   [NutrientType.Vitamin]: {
+//     [VitaminName.A]: getDefaultNutrientData(VitaminName.A),
+//     [VitaminName.B1]: getDefaultNutrientData(VitaminName.B1),
+//     [VitaminName.Choline]: getDefaultNutrientData(VitaminName.Choline),
+//     [VitaminName.C]: getDefaultNutrientData(VitaminName.C),
+//     [VitaminName.D]: getDefaultNutrientData(VitaminName.D),
+//     [VitaminName.E]: getDefaultNutrientData(VitaminName.E),
+//     [VitaminName.K]: getDefaultNutrientData(VitaminName.K)
+//   }
+// })
 
-  },
-  [NutrientType.Vitamin]: {
-    [VitaminName.A]: getDefaultNutrientData(),
-    [VitaminName.C]: getDefaultNutrientData(),
-    [VitaminName.D]: getDefaultNutrientData(),
-    [VitaminName.E]: getDefaultNutrientData(),
-    [VitaminName.K]: getDefaultNutrientData(),
-    [VitaminName.B1]: getDefaultNutrientData(),
-    [VitaminName.Choline]: getDefaultNutrientData(),
-  }
-})
-const addProducts = function (arr: Array<IProduct>) {
+const addedProducts = ref<ISelectedProduct[]>([])
+
+const addProducts = function (arr: Array<ISelectedProduct>) {
   arr.forEach(p => {
+    let productCard = {
+      name: p.name,
+      image: p.image,
+      weight: p.weight
+    }
+    console.log(p.weight)
 
+    if (!addedProducts.value.some(elem => elem.name === productCard.name)) {
+      addedProducts.value.push(productCard)
+    } else {
+      addedProducts.value.forEach((elem) => {
+        if (elem.name === productCard.name) {
+          elem.weight += 100
+        }
+      })
+    }
   })
 }
+
 </script>
 
 <style scoped lang="sass">

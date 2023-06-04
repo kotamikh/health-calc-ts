@@ -20,13 +20,13 @@
       <div class="selected">
         <p class="selected-header">Selected products</p>
         <div class="selected-products">
-          <div class="selected-product" v-for="p in selected">
+          <div class="selected-product" v-for="s in selected">
             <button class="minus-weight"
-                    @click="p.weight >= 200 ? p.weight -= 100 : remove(p)">–
+                    @click="s.weight >= 200 ? s.weight -= 100 : remove(s)">–
             </button>
-            <p>{{ p.name }} - {{ p.weight }} г.</p>
+            <p>{{ s.name }} - {{ s.weight }} г.</p>
             <button class="plus-weight"
-                    @click="p.weight <= 900 ? p.weight += 100 : p.weight">+
+                    @click="s.weight <= 900 ? s.weight += 100 : s.weight">+
             </button>
           </div>
         </div>
@@ -41,9 +41,10 @@
 
 <script setup lang="ts">
 import { computed, defineEmits, defineProps, ref } from "vue";
-import { IProduct, ProductName } from "@/types/Products";
+import { IProduct } from "@/types/Products";
 import ProductCard from "@/components/ProductCard.vue";
-import { MineralName, VitaminName } from "@/types/Nutrients";
+import { useDataStore } from "@/store/DataStore";
+import { isProxy, toRaw } from 'vue';
 
 defineProps({
   show: Boolean
@@ -51,11 +52,23 @@ defineProps({
 
 const emit = defineEmits(['closeModal', 'addProducts'])
 
+const selected = ref<ISelectedProduct[]>([])
+
+export interface ISelectedProduct extends IProduct {
+  weight: number
+}
+
 function addToSelected(p: IProduct) {
-  if(!selected.value.includes(p)) {
-    selected.value.push(p)
+  const selectedProduct: ISelectedProduct = {
+    weight: 100,
+    ...p
+  }
+
+  if (!selected.value.some(elem => elem.name === selectedProduct.name)) {
+    selected.value.push(selectedProduct)
   }
 }
+
 
 function addProducts(arr: Array<IProduct>) {
   emit('addProducts', arr)
@@ -68,61 +81,14 @@ function remove(p: IProduct) {
 }
 
 const products = computed(() => {
-  // ПОДКЛЮЧИТЬ PINIA и вынести все данные туда
+   if (isProxy(useDataStore().products)) {
+     return toRaw(useDataStore().products)
+   }
 })
 
-// const products = ref<Product[]>([
-//   {
-//     name: ProductName.Banana,
-//     image: "banana",
-//     weight: 100,
-//     Calcium: 8,
-//     Magnesium: 42,
-//     Ferrum: 0.6,
-//     Phosphorus: 28,
-//     Zink: 0.15,
-//     A: 0.02,
-//     B1: 0.04,
-//     Choline: 9.8,
-//     C: 10,
-//     D: 0,
-//     E: 0.4,
-//     K: 0.0005
-//   },
-//   {
-//     name: ProductName.Tangerine,
-//     image: "tangerine",
-//     weight: 100,
-//     Calcium: 35,
-//     Magnesium: 11,
-//     Ferrum: 0.1,
-//     Phosphorus: 17,
-//     Zink: 0.07,
-//     A: 0.01,
-//     B1: 0.06,
-//     Choline: 10.2,
-//     C: 38,
-//     D: 0,
-//     E: 0.2,
-//     K: 0,
-//   },
-//   {
-//     name: ProductName.Kiwi,
-//     image: "kiwi",
-//     weight: 100,
-//     Calcium: 40,
-//     Magnesium: 25,
-//     Ferrum: 0.8,
-//     Phosphorus: 34,
-//     Zink: 0.14,
-//     A: 0.015,
-//     B1: 0.02,
-//     Choline: 7.8,
-//     C: 180,
-//     D: 0,
-//     E: 0.3,
-//     K: 0.04,
-//   },
+
+
+
 //   {
 //     name: ProductName.Pear,
 //     image: "pear",
@@ -210,7 +176,6 @@ const products = computed(() => {
 //   }
 // ])
 
-const selected = ref<IProduct[]>([])
 </script>
 
 <style scoped lang="sass">

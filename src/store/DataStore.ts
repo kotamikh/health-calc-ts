@@ -1,5 +1,14 @@
 import { defineStore } from "pinia";
-import { IMineral, INutrient, IVitamin, MineralName, NutrientType, VitaminName, INutrientsData } from "@/types/Nutrients";
+import {
+    IMineral,
+    INutrient,
+    IVitamin,
+    MineralName,
+    NutrientType,
+    VitaminName,
+    INutrientsData,
+    IMineralValue, IVitaminValue
+} from "@/types/Nutrients";
 import { IProduct, ProductName } from "@/types/Products";
 
 export const useDataStore = defineStore('dataStore', () => {
@@ -21,7 +30,7 @@ export const useDataStore = defineStore('dataStore', () => {
             [MineralName.Ferrum]: createMineral(MineralName.Ferrum, 18),
             [MineralName.Phosphorus]: createMineral(MineralName.Phosphorus, 800),
             [MineralName.Zink]: createMineral(MineralName.Zink, 12)
-        } as Record<MineralName, IMineral>,
+        } as Record<MineralName, IMineralValue>,
         [NutrientType.Vitamin]: {
             [VitaminName.A]: createVitamin(VitaminName.A, 0.9),
             [VitaminName.B1]: createVitamin(VitaminName.B1, 0.04),
@@ -30,7 +39,7 @@ export const useDataStore = defineStore('dataStore', () => {
             [VitaminName.D]: createVitamin(VitaminName.D, 0.01),
             [VitaminName.E]: createVitamin(VitaminName.E, 15),
             [VitaminName.K]: createVitamin(VitaminName.K, 0.12)
-        } as Record<VitaminName, IVitamin>,
+        } as Record<VitaminName, IVitaminValue>,
     }
 
     const products: Record<ProductName, IProduct> = {

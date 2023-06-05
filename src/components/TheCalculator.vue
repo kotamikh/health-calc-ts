@@ -28,7 +28,7 @@
                   </v-list-item-title>
                   <v-list-item-subtitle style="display: flex; justify-content: space-between">
                     <div>{{ mineral.value }} мг</div>
-                    <div>{{ }} %</div>
+                    <div>{{ mineral.dailyRate}} %</div>
                   </v-list-item-subtitle>
                 </v-list-item>
               </v-list>
@@ -43,7 +43,7 @@
                   </v-list-item-title>
                   <v-list-item-subtitle style="display: flex; justify-content: space-between">
                     <div>{{ vitamin.value }} мг</div>
-                    <div>{{ }} %</div>
+                    <div>{{ vitamin.dailyRate }} %</div>
                   </v-list-item-subtitle>
                 </v-list-item>
               </v-list>
@@ -63,7 +63,15 @@ export default {
 
 <script setup lang="ts">
 import { ref } from "vue";
-import { IMineral, MineralName, NutrientType, IVitamin, VitaminName, INutrientsData } from "@/types/Nutrients";
+import {
+  IMineral,
+  MineralName,
+  NutrientType,
+  IVitamin,
+  VitaminName,
+  INutrientsData,
+  IVitaminValue
+} from "@/types/Nutrients";
 import ProductsModal from "@/components/ProductsModal.vue";
 import { ISelectedProduct } from "@/components/ProductsModal.vue";
 import ProductCard from "@/components/ProductCard.vue";
@@ -79,37 +87,41 @@ const openModal = function () {
 const nutrients = computed(() => {
   if (isProxy(useDataStore().dailyRateData)) {
     const rawDailyRate = toRaw(useDataStore().dailyRateData)
-    console.log(rawDailyRate)
     return rawDailyRate
   }
 })
 
-interface NutrientData {
-  value: number
-}
+// interface NutrientData {
+//   weight: number
+// }
 
-const getDefaultNutrientData = (name: MineralName | VitaminName): NutrientData => ({
-  value: 0
+const getDefaultNutrientData = (name: MineralName | VitaminName): INutrientsData => ({
+  weight: 0
 })
 
-// const data = ref<INutrientsData>({
-//   [NutrientType.Mineral]: {
-//     [MineralName.Calcium]: getDefaultNutrientData(MineralName.Calcium),
-//     [MineralName.Magnesium]: getDefaultNutrientData(MineralName.Magnesium),
-//     [MineralName.Ferrum]: getDefaultNutrientData(MineralName.Ferrum),
-//     [MineralName.Phosphorus]: getDefaultNutrientData(MineralName.Phosphorus),
-//     [MineralName.Zink]: getDefaultNutrientData(MineralName.Zink)
-//   },
-//   [NutrientType.Vitamin]: {
-//     [VitaminName.A]: getDefaultNutrientData(VitaminName.A),
-//     [VitaminName.B1]: getDefaultNutrientData(VitaminName.B1),
-//     [VitaminName.Choline]: getDefaultNutrientData(VitaminName.Choline),
-//     [VitaminName.C]: getDefaultNutrientData(VitaminName.C),
-//     [VitaminName.D]: getDefaultNutrientData(VitaminName.D),
-//     [VitaminName.E]: getDefaultNutrientData(VitaminName.E),
-//     [VitaminName.K]: getDefaultNutrientData(VitaminName.K)
-//   }
-// })
+const VitaminValues: IVitaminValue = {
+  weight: 0,
+  percent: 0,
+}
+
+const data = ref<INutrientsData>({
+  [NutrientType.Mineral]: {
+    [MineralName.Calcium]: getDefaultNutrientData(MineralName.Calcium),
+    [MineralName.Magnesium]: getDefaultNutrientData(MineralName.Magnesium),
+    [MineralName.Ferrum]: getDefaultNutrientData(MineralName.Ferrum),
+    [MineralName.Phosphorus]: getDefaultNutrientData(MineralName.Phosphorus),
+    [MineralName.Zink]: getDefaultNutrientData(MineralName.Zink)
+  },
+  [NutrientType.Vitamin]: {
+    [VitaminName.A]: getDefaultNutrientData(VitaminName.A),
+    [VitaminName.B1]: getDefaultNutrientData(VitaminName.B1),
+    [VitaminName.Choline]: getDefaultNutrientData(VitaminName.Choline),
+    [VitaminName.C]: getDefaultNutrientData(VitaminName.C),
+    [VitaminName.D]: getDefaultNutrientData(VitaminName.D),
+    [VitaminName.E]: getDefaultNutrientData(VitaminName.E),
+    [VitaminName.K]: getDefaultNutrientData(VitaminName.K)
+  }
+})
 
 const addedProducts = ref<ISelectedProduct[]>([])
 
@@ -120,7 +132,7 @@ const addProducts = function (arr: Array<ISelectedProduct>) {
       image: p.image,
       weight: p.weight
     }
-    console.log(p.weight)
+    console.log(p)
 
     if (!addedProducts.value.some(elem => elem.name === productCard.name)) {
       addedProducts.value.push(productCard)

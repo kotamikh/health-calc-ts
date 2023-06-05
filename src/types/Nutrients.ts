@@ -38,6 +38,16 @@ export interface IMineral extends INutrient {
 }
 
 export interface INutrientsData {
-    [NutrientType.Mineral]: Record<MineralName, IMineral>,
-    [NutrientType.Vitamin]: Record<VitaminName, IVitamin>
+    [NutrientType.Mineral]: Record<MineralName, IMineralValue>,
+    [NutrientType.Vitamin]: Record<VitaminName, IVitaminValue>
+}
+
+export interface IVitaminValue extends IVitamin {
+    weight: number,
+    percent: number
+}
+
+export interface IMineralValue extends IMineral{
+    weight: number,
+    percent: number
 }

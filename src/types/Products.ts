@@ -11,15 +11,19 @@ export enum ProductName {
     Cob = 'Cob'
 }
 
+export interface IProductMineralData {
+    name: MineralName,
+    value: number
+}
+
+export interface IProductVitaminData {
+    name: VitaminName,
+    value: number
+}
+
 export interface IProduct {
     name: string
     image: string
-    vitamins: {
-        name: VitaminName,
-        value: number
-    }[],
-    minerals: {
-        name: MineralName,
-        value: number
-    }[]
+    vitamins: IProductVitaminData[],
+    minerals: IProductMineralData[]
 }

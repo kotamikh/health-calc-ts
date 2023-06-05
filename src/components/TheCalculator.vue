@@ -22,13 +22,12 @@
           <v-expansion-panel title="Minerals">
             <v-expansion-panel-text>
               <v-list>
-                <v-list-item v-for="mineral of nutrients.mineral" :key="mineral.name">
+                <v-list-item v-for="(value, name) in data.mineral" :key="name">
                   <v-list-item-title>
-                    {{ mineral.name }}
+                    {{ name }}
                   </v-list-item-title>
                   <v-list-item-subtitle style="display: flex; justify-content: space-between">
-                    <div>{{ mineral.value }} мг</div>
-                    <div>{{ mineral.dailyRate}} %</div>
+                    <div>{{ value }} мг</div>
                   </v-list-item-subtitle>
                 </v-list-item>
               </v-list>
@@ -37,13 +36,12 @@
           <v-expansion-panel title="Vitamins">
             <v-expansion-panel-text>
               <v-list>
-                <v-list-item v-for="vitamin of nutrients.vitamin" :key="vitamin.name">
+                <v-list-item v-for="(value, name) in data.vitamin" :key="name">
                   <v-list-item-title>
-                    {{ vitamin.name }}
+                    {{ name }}
                   </v-list-item-title>
                   <v-list-item-subtitle style="display: flex; justify-content: space-between">
-                    <div>{{ vitamin.value }} мг</div>
-                    <div>{{ vitamin.dailyRate }} %</div>
+                    <div>{{ value }} мг</div>
                   </v-list-item-subtitle>
                 </v-list-item>
               </v-list>
@@ -73,6 +71,7 @@ import { ISelectedProduct } from "@/components/ProductsModal.vue";
 import ProductCard from "@/components/ProductCard.vue";
 import { computed } from "vue";
 import { useDataStore } from "@/store/DataStore";
+import { IProductMineralData, IProductVitaminData } from "@/types/Products";
 
 const showModal = ref(false)
 
@@ -84,39 +83,27 @@ const nutrients = computed(() => {
   return useDataStore().dailyRateData
 })
 
-interface INutrientData {
-  name: MineralName | VitaminName,
-  weight: number
+interface IData {
+  [NutrientType.Mineral]: Record<MineralName, number>,
+  [NutrientType.Vitamin]: Record<VitaminName, number>
 }
 
-interface INutrientsData {
-  [NutrientType.Mineral]: Record<MineralName, INutrientData>,
-  [NutrientType.Vitamin]: Record<VitaminName, INutrientData>,
-}
-
-const getDefaultNutrientData = (name: MineralName | VitaminName): INutrientData => {
-  return {
-    name,
-    weight: 0
-  }
-}
-
-const data = ref<INutrientsData>({
+const data = ref<IData>({
   [NutrientType.Mineral]: {
-    [MineralName.Calcium]: getDefaultNutrientData(MineralName.Calcium),
-    [MineralName.Magnesium]: getDefaultNutrientData(MineralName.Magnesium),
-    [MineralName.Ferrum]: getDefaultNutrientData(MineralName.Ferrum),
-    [MineralName.Phosphorus]: getDefaultNutrientData(MineralName.Phosphorus),
-    [MineralName.Zink]: getDefaultNutrientData(MineralName.Zink)
+    [MineralName.Calcium]: 0,
+    [MineralName.Magnesium]: 0,
+    [MineralName.Ferrum]: 0,
+    [MineralName.Phosphorus]: 0,
+    [MineralName.Zink]: 0
   },
   [NutrientType.Vitamin]: {
-    [VitaminName.A]: getDefaultNutrientData(VitaminName.A),
-    [VitaminName.B1]: getDefaultNutrientData(VitaminName.B1),
-    [VitaminName.Choline]: getDefaultNutrientData(VitaminName.Choline),
-    [VitaminName.C]: getDefaultNutrientData(VitaminName.C),
-    [VitaminName.D]: getDefaultNutrientData(VitaminName.D),
-    [VitaminName.E]: getDefaultNutrientData(VitaminName.E),
-    [VitaminName.K]: getDefaultNutrientData(VitaminName.K)
+    [VitaminName.A]: 0,
+    [VitaminName.B1]: 0,
+    [VitaminName.Choline]: 0,
+    [VitaminName.C]: 0,
+    [VitaminName.D]: 0,
+    [VitaminName.E]: 0,
+    [VitaminName.K]: 0
   }
 })
 
@@ -131,8 +118,22 @@ const addProducts = function (arr: Array<ISelectedProduct>) {
     } else {
       addedProducts.value.push({ ...p })
     }
+    updateNutrientsData(p)
   })
 }
+
+const updateNutrientsData =  function (p: ISelectedProduct) {
+  p.minerals.forEach((mineral: IProductMineralData) => {
+    const mineralsData = data.value[NutrientType.Mineral]
+    mineralsData[mineral.name] += mineral.value
+  })
+
+  p.vitamins.forEach((vitamin: IProductVitaminData) => {
+    const vitaminsData = data.value[NutrientType.Vitamin]
+    vitaminsData[vitamin.name] = vitamin.value
+  })
+}
+
 
 </script>
 

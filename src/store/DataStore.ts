@@ -1,45 +1,34 @@
 import { defineStore } from "pinia";
 import {
-    IMineral,
-    INutrient,
-    IVitamin,
     MineralName,
     NutrientType,
-    VitaminName,
-    INutrientsData,
-    IMineralValue, IVitaminValue
+    VitaminName
 } from "@/types/Nutrients";
 import { IProduct, ProductName } from "@/types/Products";
 
 export const useDataStore = defineStore('dataStore', () => {
-    const createNutrient = (type: NutrientType, name: string, dailyRate: number): INutrient => {
-        return { type, name, dailyRate }
-    }
-    const createMineral = (name: MineralName, rate: number): IMineral => {
-        return createNutrient(NutrientType.Mineral, name, rate) as IMineral
-    }
-
-    const createVitamin = (name: VitaminName, rate: number): IVitamin => {
-        return createNutrient(NutrientType.Vitamin, name, rate) as IVitamin
+    interface INutrientsData {
+        [NutrientType.Mineral]: Record<MineralName, number>,
+        [NutrientType.Vitamin]: Record<VitaminName, number>
     }
 
     const dailyRateData: INutrientsData = {
         [NutrientType.Mineral]: {
-            [MineralName.Calcium]: createMineral(MineralName.Calcium, 1000),
-            [MineralName.Magnesium]: createMineral(MineralName.Magnesium, 400),
-            [MineralName.Ferrum]: createMineral(MineralName.Ferrum, 18),
-            [MineralName.Phosphorus]: createMineral(MineralName.Phosphorus, 800),
-            [MineralName.Zink]: createMineral(MineralName.Zink, 12)
-        } as Record<MineralName, IMineralValue>,
+            [MineralName.Calcium]: 1000,
+            [MineralName.Magnesium]: 400,
+            [MineralName.Ferrum]: 18,
+            [MineralName.Phosphorus]: 800,
+            [MineralName.Zink]: 12
+        } as Record<MineralName, number>,
         [NutrientType.Vitamin]: {
-            [VitaminName.A]: createVitamin(VitaminName.A, 0.9),
-            [VitaminName.B1]: createVitamin(VitaminName.B1, 0.04),
-            [VitaminName.Choline]: createVitamin(VitaminName.Choline, 500),
-            [VitaminName.C]: createVitamin(VitaminName.C, 90),
-            [VitaminName.D]: createVitamin(VitaminName.D, 0.01),
-            [VitaminName.E]: createVitamin(VitaminName.E, 15),
-            [VitaminName.K]: createVitamin(VitaminName.K, 0.12)
-        } as Record<VitaminName, IVitaminValue>,
+            [VitaminName.A]: 0.9,
+            [VitaminName.B1]: 0.04,
+            [VitaminName.Choline]: 500,
+            [VitaminName.C]: 90,
+            [VitaminName.D]: 0.01,
+            [VitaminName.E]: 15,
+            [VitaminName.K]: 0.12
+        } as Record<VitaminName, number>,
     }
 
     const products: Record<ProductName, IProduct> = {
@@ -494,9 +483,6 @@ export const useDataStore = defineStore('dataStore', () => {
     } as Record<ProductName, IProduct>
 
     return {
-        createNutrient,
-        createMineral,
-        createVitamin,
         dailyRateData,
         products
     }

@@ -64,18 +64,14 @@ export default {
 <script setup lang="ts">
 import { ref } from "vue";
 import {
-  IMineral,
   MineralName,
   NutrientType,
-  IVitamin,
-  VitaminName,
-  INutrientsData,
-  IVitaminValue
+  VitaminName
 } from "@/types/Nutrients";
 import ProductsModal from "@/components/ProductsModal.vue";
 import { ISelectedProduct } from "@/components/ProductsModal.vue";
 import ProductCard from "@/components/ProductCard.vue";
-import { computed, isProxy, toRaw } from "vue";
+import { computed } from "vue";
 import { useDataStore } from "@/store/DataStore";
 
 const showModal = ref(false)
@@ -85,23 +81,24 @@ const openModal = function () {
 }
 
 const nutrients = computed(() => {
-  if (isProxy(useDataStore().dailyRateData)) {
-    const rawDailyRate = toRaw(useDataStore().dailyRateData)
-    return rawDailyRate
+  return useDataStore().dailyRateData
+})
+
+interface INutrientData {
+  name: MineralName | VitaminName,
+  weight: number
+}
+
+interface INutrientsData {
+  [NutrientType.Mineral]: Record<MineralName, INutrientData>,
+  [NutrientType.Vitamin]: Record<VitaminName, INutrientData>,
+}
+
+const getDefaultNutrientData = (name: MineralName | VitaminName): INutrientData => {
+  return {
+    name,
+    weight: 0
   }
-})
-
-// interface NutrientData {
-//   weight: number
-// }
-
-const getDefaultNutrientData = (name: MineralName | VitaminName): INutrientsData => ({
-  weight: 0
-})
-
-const VitaminValues: IVitaminValue = {
-  weight: 0,
-  percent: 0,
 }
 
 const data = ref<INutrientsData>({
@@ -127,21 +124,12 @@ const addedProducts = ref<ISelectedProduct[]>([])
 
 const addProducts = function (arr: Array<ISelectedProduct>) {
   arr.forEach(p => {
-    let productCard = {
-      name: p.name,
-      image: p.image,
-      weight: p.weight
-    }
-    console.log(p)
+    const obj = addedProducts.value.find(elem => elem.name === p.name);
 
-    if (!addedProducts.value.some(elem => elem.name === productCard.name)) {
-      addedProducts.value.push(productCard)
+    if (obj) {
+      obj.weight += p.weight
     } else {
-      addedProducts.value.forEach((elem) => {
-        if (elem.name === productCard.name) {
-          elem.weight += 100
-        }
-      })
+      addedProducts.value.push({ ...p })
     }
   })
 }

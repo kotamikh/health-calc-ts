@@ -81,9 +81,7 @@ function remove(p: IProduct) {
 }
 
 const products = computed(() => {
-   if (isProxy(useDataStore().products)) {
-     return toRaw(useDataStore().products)
-   }
+  return useDataStore().products
 })
 </script>
 

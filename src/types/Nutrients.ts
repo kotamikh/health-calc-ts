@@ -36,18 +36,3 @@ export interface IMineral extends INutrient {
     name: MineralName,
     type: NutrientType.Mineral
 }
-
-export interface INutrientsData {
-    [NutrientType.Mineral]: Record<MineralName, IMineralValue>,
-    [NutrientType.Vitamin]: Record<VitaminName, IVitaminValue>
-}
-
-export interface IVitaminValue extends IVitamin {
-    weight: number,
-    percent: number
-}
-
-export interface IMineralValue extends IMineral{
-    weight: number,
-    percent: number
-}

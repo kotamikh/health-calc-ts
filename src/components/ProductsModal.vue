@@ -68,10 +68,8 @@ function addToSelected(p: IProduct) {
   }
 }
 
-
 function addProducts(arr: Array<IProduct>) {
   emit('addProducts', arr)
-  console.log(arr)
   emit('closeModal')
   selected.value = []
 }

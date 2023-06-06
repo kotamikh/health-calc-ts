@@ -28,6 +28,7 @@
                   </v-list-item-title>
                   <v-list-item-subtitle style="display: flex; justify-content: space-between">
                     <div>{{ value }} мг</div>
+                    <div>{{ percentCountMineral(value, name) }} %</div>
                   </v-list-item-subtitle>
                 </v-list-item>
               </v-list>
@@ -42,6 +43,7 @@
                   </v-list-item-title>
                   <v-list-item-subtitle style="display: flex; justify-content: space-between">
                     <div>{{ value }} мг</div>
+                    <div>{{ percentCountVitamin(value, name) }} %</div>
                   </v-list-item-subtitle>
                 </v-list-item>
               </v-list>
@@ -70,7 +72,7 @@ import ProductsModal from "@/components/ProductsModal.vue";
 import { ISelectedProduct } from "@/components/ProductsModal.vue";
 import ProductCard from "@/components/ProductCard.vue";
 import { computed } from "vue";
-import { useDataStore } from "@/store/DataStore";
+import { useDataStore, INutrientsData } from "@/store/DataStore";
 import { IProductMineralData, IProductVitaminData } from "@/types/Products";
 
 const showModal = ref(false)
@@ -79,9 +81,17 @@ const openModal = function () {
   showModal.value = true
 }
 
-const nutrients = computed(() => {
+const nutrients = computed<INutrientsData>(() => {
   return useDataStore().dailyRateData
 })
+
+const percentCountMineral = (value: number, name: string) => {
+  return (((100 * value) / nutrients.value.mineral[name])).toFixed(2)
+}
+
+const percentCountVitamin= (value: number, name: string) => {
+  return (((100 * value) / nutrients.value.vitamin[name])).toFixed(2)
+}
 
 interface IData {
   [NutrientType.Mineral]: Record<MineralName, number>,
@@ -123,14 +133,15 @@ const addProducts = function (arr: Array<ISelectedProduct>) {
 }
 
 const updateNutrientsData =  function (p: ISelectedProduct) {
+  const mineralsData = data.value[NutrientType.Mineral]
+  const vitaminsData = data.value[NutrientType.Vitamin]
+
   p.minerals.forEach((mineral: IProductMineralData) => {
-    const mineralsData = data.value[NutrientType.Mineral]
     mineralsData[mineral.name] += mineral.value * p.weight / 100;
     mineralsData[mineral.name] = +(mineralsData[mineral.name]).toFixed(3)
   })
 
   p.vitamins.forEach((vitamin: IProductVitaminData) => {
-    const vitaminsData = data.value[NutrientType.Vitamin]
     vitaminsData[vitamin.name] += vitamin.value * p.weight / 100;
     vitaminsData[vitamin.name] = +(vitaminsData[vitamin.name]).toFixed(3)
   })

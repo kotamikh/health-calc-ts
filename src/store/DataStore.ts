@@ -5,6 +5,7 @@ import {
     VitaminName
 } from "@/types/Nutrients";
 import { IProduct, ProductName } from "@/types/Products";
+export interface  INutrientsData {}
 
 export const useDataStore = defineStore('dataStore', () => {
     interface INutrientsData {

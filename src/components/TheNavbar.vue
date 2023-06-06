@@ -4,8 +4,8 @@
     <ul class="nav-items">
       <li v-for="link in links"
           :key="link.id"
-          @click="moveToPage()"
-      >{{ link.title }}
+      >
+        <a :href="`#${link.title}`">{{ link.title }}</a>
       </li>
     </ul>
   </div>
@@ -38,10 +38,6 @@ window.onscroll = function () {
     }
   }
 }
-
-// const moveToPage = function() {
-//   let page =
-// }
 </script>
 
 
@@ -76,4 +72,7 @@ window.onscroll = function () {
     list-style: none
     font-weight: bold
 
+    a
+      color: white
+      text-decoration: none
 </style>

@@ -147,7 +147,6 @@ const updateNutrientsData =  function (p: ISelectedProduct) {
   })
 }
 
-
 </script>
 
 <style scoped lang="sass">

@@ -398,7 +398,7 @@ export const useDataStore = defineStore('dataStore', () => {
                 },
                 {
                     name: VitaminName.K,
-                    value: 0.013
+                    value: (0.013).toFixed(3)
                 },
             ],
             minerals: [

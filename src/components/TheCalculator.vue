@@ -125,12 +125,14 @@ const addProducts = function (arr: Array<ISelectedProduct>) {
 const updateNutrientsData =  function (p: ISelectedProduct) {
   p.minerals.forEach((mineral: IProductMineralData) => {
     const mineralsData = data.value[NutrientType.Mineral]
-    mineralsData[mineral.name] += mineral.value
+    mineralsData[mineral.name] += mineral.value * p.weight / 100;
+    mineralsData[mineral.name] = +(mineralsData[mineral.name]).toFixed(3)
   })
 
   p.vitamins.forEach((vitamin: IProductVitaminData) => {
     const vitaminsData = data.value[NutrientType.Vitamin]
-    vitaminsData[vitamin.name] = vitamin.value
+    vitaminsData[vitamin.name] += vitamin.value * p.weight / 100;
+    vitaminsData[vitamin.name] = +(vitaminsData[vitamin.name]).toFixed(3)
   })
 }
 

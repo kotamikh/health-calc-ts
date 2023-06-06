@@ -44,7 +44,6 @@ import { computed, defineEmits, defineProps, ref } from "vue";
 import { IProduct } from "@/types/Products";
 import ProductCard from "@/components/ProductCard.vue";
 import { useDataStore } from "@/store/DataStore";
-import { isProxy, toRaw } from 'vue';
 
 defineProps({
   show: Boolean
@@ -72,6 +71,7 @@ function addToSelected(p: IProduct) {
 
 function addProducts(arr: Array<IProduct>) {
   emit('addProducts', arr)
+  console.log(arr)
   emit('closeModal')
   selected.value = []
 }

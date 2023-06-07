@@ -8,6 +8,13 @@
             :image-name="p.image"
         >
           <p>{{ p.weight }} г.</p>
+          <button class="product-delete" @click="removeFromAdded(p)">
+            <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="#818181" class="bi bi-x"
+                 viewBox="0 0 16 16">
+              <path
+                  d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
+            </svg>
+          </button>
         </product-card>
         <button class="open-btn"
                 @click="openModal"
@@ -89,7 +96,7 @@ const percentCountMineral = (value: number, name: string) => {
   return (((100 * value) / nutrients.value.mineral[name])).toFixed(2)
 }
 
-const percentCountVitamin= (value: number, name: string) => {
+const percentCountVitamin = (value: number, name: string) => {
   return (((100 * value) / nutrients.value.vitamin[name])).toFixed(2)
 }
 
@@ -128,25 +135,40 @@ const addProducts = function (arr: Array<ISelectedProduct>) {
     } else {
       addedProducts.value.push({ ...p })
     }
-    updateNutrientsData(p)
   })
+  console.log(addedProducts.value)
+  updateNutrientsData(addedProducts.value)
 }
 
-const updateNutrientsData =  function (p: ISelectedProduct) {
+const updateNutrientsData = function (arr: Array<ISelectedProduct>) {
+  Object.keys(data.value[NutrientType.Mineral]).forEach((key: MineralName) => {
+    data.value[NutrientType.Mineral][key] = 0
+  })
+  Object.keys(data.value[NutrientType.Vitamin]).forEach((key) => {
+    (data.value[NutrientType.Vitamin] as any)[key] = 0
+  })
+
   const mineralsData = data.value[NutrientType.Mineral]
   const vitaminsData = data.value[NutrientType.Vitamin]
 
-  p.minerals.forEach((mineral: IProductMineralData) => {
-    mineralsData[mineral.name] += mineral.value * p.weight / 100;
-    mineralsData[mineral.name] = +(mineralsData[mineral.name]).toFixed(3)
-  })
+  arr.forEach(p => {
+    p.minerals.forEach((mineral: IProductMineralData) => {
+      mineralsData[mineral.name] += mineral.value * p.weight / 100;
+      mineralsData[mineral.name] = +(mineralsData[mineral.name]).toFixed(3)
+    })
 
-  p.vitamins.forEach((vitamin: IProductVitaminData) => {
-    vitaminsData[vitamin.name] += vitamin.value * p.weight / 100;
-    vitaminsData[vitamin.name] = +(vitaminsData[vitamin.name]).toFixed(3)
+    p.vitamins.forEach((vitamin: IProductVitaminData) => {
+      vitaminsData[vitamin.name] += vitamin.value * p.weight / 100;
+      vitaminsData[vitamin.name] = +(vitaminsData[vitamin.name]).toFixed(3)
+    })
   })
 }
 
+const removeFromAdded = (p: ISelectedProduct) => {
+  addedProducts.value = addedProducts.value.filter(product => product.name !== p.name)
+  console.log(addedProducts.value)
+  updateNutrientsData(addedProducts.value)
+}
 </script>
 
 <style scoped lang="sass">
@@ -208,4 +230,8 @@ const updateNutrientsData =  function (p: ISelectedProduct) {
     width: 40%
     height: fit-content
 
+  button.product-delete
+    position: absolute
+    top: 0
+    right: 0
 </style>

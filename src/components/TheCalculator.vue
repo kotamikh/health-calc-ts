@@ -92,12 +92,16 @@ const nutrients = computed<INutrientsData>(() => {
   return useDataStore().dailyRateData
 })
 
-const percentCountMineral = (value: number, name: string) => {
-  return (((100 * value) / nutrients.value.mineral[name])).toFixed(2)
+const percentCountMineral = (value: number, name: MineralName) => {
+  return percentCount(value, nutrients.value.mineral[name])
 }
 
-const percentCountVitamin = (value: number, name: string) => {
-  return (((100 * value) / nutrients.value.vitamin[name])).toFixed(2)
+const percentCountVitamin = (value: number, name: VitaminName) => {
+  return percentCount(value, nutrients.value.vitamin[name])
+}
+
+const percentCount = (value: number, dailyRate: number) => {
+  return (((100 * value) / dailyRate)).toFixed(2)
 }
 
 interface IData {
@@ -141,11 +145,14 @@ const addProducts = function (arr: Array<ISelectedProduct>) {
 }
 
 const updateNutrientsData = function (arr: Array<ISelectedProduct>) {
-  Object.keys(data.value[NutrientType.Mineral]).forEach((key: MineralName) => {
+  const mineralNames = Object.keys(data.value[NutrientType.Mineral]) as MineralName[]
+  const vitaminNames = Object.keys(data.value[NutrientType.Vitamin]) as VitaminName[]
+
+  mineralNames.forEach((key: MineralName) => {
     data.value[NutrientType.Mineral][key] = 0
   })
-  Object.keys(data.value[NutrientType.Vitamin]).forEach((key) => {
-    (data.value[NutrientType.Vitamin] as any)[key] = 0
+  vitaminNames.forEach((key) => {
+    data.value[NutrientType.Vitamin][key] = 0
   })
 
   const mineralsData = data.value[NutrientType.Mineral]

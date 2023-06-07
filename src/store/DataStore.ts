@@ -5,13 +5,12 @@ import {
     VitaminName
 } from "@/types/Nutrients";
 import { IProduct, ProductName } from "@/types/Products";
-export interface  INutrientsData {}
+export interface  INutrientsData {
+    [NutrientType.Mineral]: Record<MineralName, number>,
+    [NutrientType.Vitamin]: Record<VitaminName, number>
+}
 
 export const useDataStore = defineStore('dataStore', () => {
-    interface INutrientsData {
-        [NutrientType.Mineral]: Record<MineralName, number>,
-        [NutrientType.Vitamin]: Record<VitaminName, number>
-    }
 
     const dailyRateData: INutrientsData = {
         [NutrientType.Mineral]: {
@@ -20,7 +19,7 @@ export const useDataStore = defineStore('dataStore', () => {
             [MineralName.Ferrum]: 18,
             [MineralName.Phosphorus]: 800,
             [MineralName.Zink]: 12
-        } as Record<MineralName, number>,
+        },
         [NutrientType.Vitamin]: {
             [VitaminName.A]: 0.9,
             [VitaminName.B1]: 0.04,
@@ -29,7 +28,7 @@ export const useDataStore = defineStore('dataStore', () => {
             [VitaminName.D]: 0.01,
             [VitaminName.E]: 15,
             [VitaminName.K]: 0.12
-        } as Record<VitaminName, number>,
+        },
     }
 
     const products: Record<ProductName, IProduct> = {
@@ -399,7 +398,7 @@ export const useDataStore = defineStore('dataStore', () => {
                 },
                 {
                     name: VitaminName.K,
-                    value: (0.013).toFixed(3)
+                    value: 0.013
                 },
             ],
             minerals: [
@@ -481,7 +480,7 @@ export const useDataStore = defineStore('dataStore', () => {
                 }
             ]
         }
-    } as Record<ProductName, IProduct>
+    }
 
     return {
         dailyRateData,
